@@ -1,81 +1,66 @@
-def calcR(lr):
-    s = 0
-    for el in lr:
-        s = s + int(el)
-    return s
+def calcR(lista):
+    """Calculează suma valorilor dintr-o listă de numere întregi."""
+    return sum(map(int, lista))
 
-def calcT(lt):
-    s1 = 0
-    s2 = 9
-    s3 = 0
+def calcT(lista):
+    """Calculează distribuția voturilor și afișează rezultatele."""
+    s1 = s2 = s3 = 0
     for i in range(100):
-        z = 3*i
-        if int(lt[z]) == 10:
-            s1 = s1 + 1
-        elif int(lt[z+1]) == 10:
-            s2 = s2 + 1
-        elif int(lt[z+2]) == 10:
-            s3 = s3 + 1
+        z = 3 * i
+        if int(lista[z]) == 10:
+            s1 += 1
+        elif int(lista[z + 1]) == 10:
+            s2 += 1
+        elif int(lista[z + 2]) == 10:
+            s3 += 1
         else:
-            print(">>> Error")
-    print(s1)
-    print(s2)
-    print(s3)
+            print(">>> Eroare: niciun element nu este 10!")
+    
+    print("Distribuția voturilor:")
+    print(f"Prima poziție: {s1}")
+    print(f"A doua poziție: {s2}")
+    print(f"A treia poziție: {s3}")
 
-file = open("r.txt", "r")
-content = file.read()
-tokens = content.split()
-countT = 0
-for el in tokens:
-    countT = countT + 1
-print(countT)
+with open("r.txt", "r") as file:
+    tokens = file.read().split()
 
-s = 0
-c1 = []
-c2 = []
-c3 = []
+print(f"Număr total de valori: {len(tokens)}")
+print("Valorile citite:", tokens, "\n")
 
-print(tokens)
-print()
 
 for i in range(100):
-    z = 3*(i)
-    max = z
-    #print(i)
-    #print(tokens[z])
-    #print(tokens[z+1])
-    #print(tokens[z+2])
-    #print()
-    if (int(tokens[z]) == 10 and int(tokens[z+1]) == 10):
+    z = 3 * i
+    max_idx = z
+    
+    if int(tokens[z]) == 10 and int(tokens[z + 1]) == 10:
         tokens[z] = "9"
-    if (int(tokens[z+2]) == 10 and int(tokens[z+1]) == 10):
-        tokens[z+2] = "9"
-    if (int(tokens[z]) == 10 or int(tokens[z+1]) == 10 or int(tokens[z+2]) == 10):
-        pass
-    if int(tokens[z]) < int(tokens[z+1]):
-        max = z + 1
-    if int(tokens[max]) < int(tokens[z+2]):
-        max = z + 2
-    tokens[max] = "10"
+    if int(tokens[z + 2]) == 10 and int(tokens[z + 1]) == 10:
+        tokens[z + 2] = "9"
 
-print(tokens)
+    if int(tokens[z]) < int(tokens[z + 1]):
+        max_idx = z + 1
+    if int(tokens[max_idx]) < int(tokens[z + 2]):
+        max_idx = z + 2
 
-for el in tokens:
-    s= s+1
-    if s > 3:
-        s = 1
-    match s:
-        case 1:
-            c1.append(el)
-        case 2:
-            c2.append(el)
-        case 3:
-            c3.append(el)
+    tokens[max_idx] = "10"
 
-print(calcR(c1))
-print(calcR(c2))
-print(calcR(c3))
+print("Valorile procesate:", tokens, "\n")
+
+
+c1, c2, c3 = [], [], []
+
+for idx, el in enumerate(tokens):
+    if idx % 3 == 0:
+        c1.append(el)
+    elif idx % 3 == 1:
+        c2.append(el)
+    else:
+        c3.append(el)
+
+
+print("Rezultatul votului tradițional:", calcR(c1))
+print("Rezultatul votului prin rated diferențe:", calcR(c2))
+print("Al treilea set de rezultate:", calcR(c3))
+
 
 calcT(tokens)
-
-file.close()
