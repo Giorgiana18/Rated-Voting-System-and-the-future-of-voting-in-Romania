@@ -20,8 +20,7 @@ def calcT(lista):
             print(">>> Eroare: niciun element nu este 10!")
     return [s1, s2, s3]
 
-# Citirea fișierului
-with open("r2.txt", "r") as file:
+with open("r.txt", "r") as file:
     tokens = file.read().split()
 
 print("Numărul total de alegători:")
@@ -63,7 +62,7 @@ for i, el in enumerate(tv):
     print(f"Candidatul {['Ion', 'Vasile', 'Constantin'][i]} a obținut {el} voturi")
 print()
 
-print("Vot cu Rating")
+print("Vot prin sistemul Rating")
 rv = [calcR(c1), calcR(c2), calcR(c3)]
 for i, el in enumerate(rv):
     print(f"Candidatul {['Ion', 'Vasile', 'Constantin'][i]} a obținut {el} puncte")
@@ -86,8 +85,8 @@ if egalitate_rv:
 
 if not egalitate_tv and not egalitate_rv:
     print("Rezultate finale:")
-    print(f"Câștigător vot tradițional: Candidatul {cand[tv.index(max(tv))]}")
-    print(f"Câștigător vot cu rating: Candidatul {cand[rv.index(max(rv))]}")
+    print(f"Câștigător prin sistemul de vot tradițional: Candidatul {cand[tv.index(max(tv))]}")
+    print(f"Câștigător prin sistemul de vot rating: Candidatul {cand[rv.index(max(rv))]}")
 
 
 x = np.arange(len(cand))
